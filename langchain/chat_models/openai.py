@@ -340,6 +340,9 @@ class ChatOpenAI(BaseChatModel):
         **kwargs: Any,
     ) -> ChatResult:
         message_dicts, params = self._create_message_dicts(messages, stop)
+        # messages = [message['content'] for message in message_dicts]
+        # print(messages[1])
+        # print('---'*10+'END'+'---'*10)
         params = {**params, **kwargs}
         if self.streaming:
             inner_completion = ""
