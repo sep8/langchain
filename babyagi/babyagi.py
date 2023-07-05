@@ -34,8 +34,6 @@ class BabyAGI(Chain, BaseModel):
     task_id_counter: int = Field(1)
     vectorstore: VectorStore = Field(init=False)
     max_iterations: Optional[int] = None
-    tools: Sequence[BaseTool] = babyagi_tools
-
     class Config:
         """Configuration for this pydantic object."""
 
@@ -202,6 +200,7 @@ class BabyAGI(Chain, BaseModel):
     def from_llm(
         cls,
         llm: BaseLLM,
+        tools: Sequence[BaseTool] = babyagi_tools,
         verbose: bool = False,
         **kwargs
     ) -> "BabyAGI":
@@ -211,12 +210,12 @@ class BabyAGI(Chain, BaseModel):
         task_prioritization_chain = TaskPrioritizationChain.from_llm(
             llm, verbose=verbose
         )
-        prompt = cls.create_prompt(cls.tools)
+        prompt = cls.create_prompt(tools)
         llm_chain = LLMChain(llm=llm, prompt=prompt)
-        tool_names = [tool.name for tool in cls.tools]
+        tool_names = [tool.name for tool in tools]
         agent = ZeroShotAgent(llm_chain=llm_chain, allowed_tools=tool_names)
         agent_executor = AgentExecutor.from_agent_and_tools(
-            agent=agent, tools=cls.tools, verbose=True
+            agent=agent, tools=tools, verbose=True
         )
         return cls(
             task_creation_chain=task_creation_chain,
