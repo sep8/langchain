@@ -15,8 +15,8 @@ babyagi_tools = [
         description="useful for when you need to answer questions about current events",
     ),
     Tool(
-        name="TODO",
+        name="TaskList",
         func=todo_chain.run,
-        description="useful for when you need to come up with todo lists. Input: an objective to create a todo list for. Output: a todo list for that objective. Please be very clear what the objective is!",
+        description="useful for when you need to come up with task lists. Input: an objective to create a todo list for. Output: a todo list for that objective. Please be very clear what the objective is!",
     ),
 ]
