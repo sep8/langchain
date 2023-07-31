@@ -847,8 +847,11 @@ s
                 if return_direct:
                     tool_run_kwargs["llm_prefix"] = ""
                 # We then call the tool on the tool input to get an observation
+                tool_input = agent_action.tool_input
+                if agent_action.tool == 'Wikipedia' and type(tool_input) == dict:
+                    tool_input = tool_input['title']
                 observation = tool.run(
-                    agent_action.tool_input,
+                    tool_input,
                     verbose=self.verbose,
                     color=color,
                     callbacks=run_manager.get_child() if run_manager else None,
