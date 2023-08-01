@@ -17,6 +17,6 @@ babyagi_tools = [
     Tool(
         name="TaskList",
         func=todo_chain.run,
-        description="useful for when you need to come up with task lists. Input: an objective to create a todo list for. Output: a todo list for that objective. Please be very clear what the objective is!",
+        description="useful for when you need to come up with task lists. Input: an objective to create a task list for. Output: a task list for that objective. Please make a list of minimum steps to complete the objective! Please be very clear what the objective is!",
     ),
 ]

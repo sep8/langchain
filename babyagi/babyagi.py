@@ -127,7 +127,7 @@ class BabyAGI(Chain, BaseModel):
     def _call(self, inputs: Dict[str, Any]) -> Dict[str, Any]:
         """Run the agent."""
         objective = inputs["objective"]
-        first_task = inputs.get("first_task", "Make a todo list")
+        first_task = inputs.get("first_task", "Make a task list")
         self.add_task({"task_id": 1, "task_name": first_task})
         num_iters = 0
         while True:
@@ -215,7 +215,7 @@ class BabyAGI(Chain, BaseModel):
         tool_names = [tool.name for tool in tools]
         agent = ZeroShotAgent(llm_chain=llm_chain, allowed_tools=tool_names)
         agent_executor = AgentExecutor.from_agent_and_tools(
-            agent=agent, tools=tools, verbose=True
+            agent=agent, tools=tools, verbose=False
         )
         return cls(
             task_creation_chain=task_creation_chain,
